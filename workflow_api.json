@@ -1,0 +1,854 @@
+{
+  "9": {
+    "inputs": {
+      "filename_prefix": "output_image",
+      "images": [
+        "68:8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Сохранить изображение"
+    }
+  },
+  "45": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "megapixels": 1,
+      "resolution_steps": 1,
+      "image": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "ImageScaleToTotalPixels",
+    "_meta": {
+      "title": "Масштабировать изображение до общего количества пикселей"
+    }
+  },
+  "46": {
+    "inputs": {
+      "image": "INPUT_IMAGE.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Загрузить изображение"
+    }
+  },
+  "139": {
+    "inputs": {
+      "filename_prefix": "video/output",
+      "format": "auto",
+      "codec": "auto",
+      "video-preview": "",
+      "video": [
+        "132:94",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "Сохранить видео"
+    }
+  },
+  "68:48": {
+    "inputs": {
+      "steps": [
+        "68:93",
+        0
+      ],
+      "width": [
+        "68:72",
+        0
+      ],
+      "height": [
+        "68:72",
+        1
+      ]
+    },
+    "class_type": "Flux2Scheduler",
+    "_meta": {
+      "title": "Flux2Scheduler"
+    }
+  },
+  "68:22": {
+    "inputs": {
+      "model": [
+        "68:92",
+        0
+      ],
+      "conditioning": [
+        "68:43",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "Основной гид"
+    }
+  },
+  "68:16": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "Выбор KSampler"
+    }
+  },
+  "68:10": {
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Загрузить VAE"
+    }
+  },
+  "68:13": {
+    "inputs": {
+      "noise": [
+        "68:25",
+        0
+      ],
+      "guider": [
+        "68:22",
+        0
+      ],
+      "sampler": [
+        "68:16",
+        0
+      ],
+      "sigmas": [
+        "68:48",
+        0
+      ],
+      "latent_image": [
+        "68:47",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "Пользовательский сэмплер (Расширенный)"
+    }
+  },
+  "68:6": {
+    "inputs": {
+      "text": "FLUX2_POSITIVE_PROMPT",
+      "clip": [
+        "68:38",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "68:38": {
+    "inputs": {
+      "clip_name": "mistral_3_small_flux2_bf16.safetensors",
+      "type": "flux2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Загрузить CLIP"
+    }
+  },
+  "68:25": {
+    "inputs": {
+      "noise_seed": 0
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "Случайный шум"
+    }
+  },
+  "68:8": {
+    "inputs": {
+      "samples": [
+        "68:13",
+        0
+      ],
+      "vae": [
+        "68:10",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Декодировать VAE"
+    }
+  },
+  "68:26": {
+    "inputs": {
+      "guidance": 4,
+      "conditioning": [
+        "68:6",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "Направление Flux"
+    }
+  },
+  "68:89": {
+    "inputs": {
+      "lora_name": "Flux_2-Turbo-LoRA_comfyui.safetensors",
+      "strength_model": 1,
+      "model": [
+        "68:12",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Загрузчик LoRA (Только модель)"
+    }
+  },
+  "68:12": {
+    "inputs": {
+      "unet_name": "flux2_dev_fp8mixed.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Загрузить модель диффузии"
+    }
+  },
+  "68:92": {
+    "inputs": {
+      "switch": [
+        "68:94",
+        0
+      ],
+      "on_false": [
+        "68:12",
+        0
+      ],
+      "on_true": [
+        "68:89",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch(model)"
+    }
+  },
+  "68:90": {
+    "inputs": {
+      "value": 8
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "68:91": {
+    "inputs": {
+      "value": 20
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "68:93": {
+    "inputs": {
+      "switch": [
+        "68:94",
+        0
+      ],
+      "on_false": [
+        "68:91",
+        0
+      ],
+      "on_true": [
+        "68:90",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch(steps)"
+    }
+  },
+  "68:47": {
+    "inputs": {
+      "width": [
+        "68:72",
+        0
+      ],
+      "height": [
+        "68:72",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyFlux2LatentImage",
+    "_meta": {
+      "title": "Пустой Flux 2 latent"
+    }
+  },
+  "68:72": {
+    "inputs": {
+      "image": [
+        "45",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Получить размер изображения"
+    }
+  },
+  "68:44": {
+    "inputs": {
+      "pixels": [
+        "45",
+        0
+      ],
+      "vae": [
+        "68:10",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "Кодировать VAE"
+    }
+  },
+  "68:43": {
+    "inputs": {
+      "conditioning": [
+        "68:26",
+        0
+      ],
+      "latent": [
+        "68:44",
+        0
+      ]
+    },
+    "class_type": "ReferenceLatent",
+    "_meta": {
+      "title": "Эталонный латент"
+    }
+  },
+  "68:94": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Enable 8 steps lora"
+    }
+  },
+  "132:98": {
+    "inputs": {
+      "width": 496,
+      "height": 1008,
+      "length": 81,
+      "batch_size": 1,
+      "positive": [
+        "132:93",
+        0
+      ],
+      "negative": [
+        "132:89",
+        0
+      ],
+      "vae": [
+        "132:90",
+        0
+      ],
+      "start_image": [
+        "68:8",
+        0
+      ]
+    },
+    "class_type": "WanImageToVideo",
+    "_meta": {
+      "title": "WanИзображениеВВидео"
+    }
+  },
+  "132:94": {
+    "inputs": {
+      "fps": 16,
+      "images": [
+        "132:87",
+        0
+      ],
+      "audio": [
+        "F4",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Создать видео"
+    }
+  },
+  "132:104": {
+    "inputs": {
+      "shift": 5.000000000000001,
+      "model": [
+        "132:116",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingSD3",
+    "_meta": {
+      "title": "Выборка модели SD3"
+    }
+  },
+  "132:102": {
+    "inputs": {
+      "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+      "strength_model": 1.0000000000000002,
+      "model": [
+        "132:96",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Загрузчик LoRA (Только модель)"
+    }
+  },
+  "132:124": {
+    "inputs": {
+      "value": 2
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "split_step"
+    }
+  },
+  "132:85": {
+    "inputs": {
+      "add_noise": "disable",
+      "noise_seed": 0,
+      "steps": [
+        "132:119",
+        0
+      ],
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "start_at_step": [
+        "132:125",
+        0
+      ],
+      "end_at_step": [
+        "132:119",
+        0
+      ],
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "132:103",
+        0
+      ],
+      "positive": [
+        "132:98",
+        0
+      ],
+      "negative": [
+        "132:98",
+        1
+      ],
+      "latent_image": [
+        "132:86",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Расширенный)"
+    }
+  },
+  "132:118": {
+    "inputs": {
+      "value": 4
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "132:86": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 0,
+      "steps": [
+        "132:119",
+        0
+      ],
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "start_at_step": 0,
+      "end_at_step": [
+        "132:125",
+        0
+      ],
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "132:104",
+        0
+      ],
+      "positive": [
+        "132:98",
+        0
+      ],
+      "negative": [
+        "132:98",
+        1
+      ],
+      "latent_image": [
+        "132:98",
+        2
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Расширенный)"
+    }
+  },
+  "132:89": {
+    "inputs": {
+      "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
+      "clip": [
+        "132:84",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "132:128": {
+    "inputs": {
+      "value": 20
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "132:87": {
+    "inputs": {
+      "samples": [
+        "132:85",
+        0
+      ],
+      "vae": [
+        "132:90",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Декодировать VAE"
+    }
+  },
+  "132:93": {
+    "inputs": {
+      "text": "WAN_POSITIVE_PROMPT",
+      "clip": [
+        "132:84",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "132:131": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Enable 4steps LoRA?"
+    }
+  },
+  "132:90": {
+    "inputs": {
+      "vae_name": "wan_2.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Загрузить VAE"
+    }
+  },
+  "132:84": {
+    "inputs": {
+      "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "wan",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Загрузить CLIP"
+    }
+  },
+  "132:96": {
+    "inputs": {
+      "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Загрузить модель диффузии"
+    }
+  },
+  "132:95": {
+    "inputs": {
+      "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Загрузить модель диффузии"
+    }
+  },
+  "132:103": {
+    "inputs": {
+      "shift": 5.000000000000001,
+      "model": [
+        "132:117",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingSD3",
+    "_meta": {
+      "title": "Выборка модели SD3"
+    }
+  },
+  "132:127": {
+    "inputs": {
+      "value": 10
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "split_step"
+    }
+  },
+  "132:101": {
+    "inputs": {
+      "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+      "strength_model": 1.0000000000000002,
+      "model": [
+        "132:95",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Загрузчик LoRA (Только модель)"
+    }
+  },
+  "132:126": {
+    "inputs": {
+      "value": 3.5
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "CFG"
+    }
+  },
+  "132:116": {
+    "inputs": {
+      "switch": [
+        "132:131",
+        0
+      ],
+      "on_false": [
+        "132:95",
+        0
+      ],
+      "on_true": [
+        "132:101",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (Model)"
+    }
+  },
+  "132:117": {
+    "inputs": {
+      "switch": [
+        "132:131",
+        0
+      ],
+      "on_false": [
+        "132:96",
+        0
+      ],
+      "on_true": [
+        "132:102",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (Model)"
+    }
+  },
+  "132:119": {
+    "inputs": {
+      "switch": [
+        "132:131",
+        0
+      ],
+      "on_false": [
+        "132:128",
+        0
+      ],
+      "on_true": [
+        "132:118",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (Steps)"
+    }
+  },
+  "132:120": {
+    "inputs": {
+      "switch": [
+        "132:131",
+        0
+      ],
+      "on_false": [
+        "132:126",
+        0
+      ],
+      "on_true": [
+        "132:122",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (CFG)"
+    }
+  },
+  "132:125": {
+    "inputs": {
+      "switch": [
+        "132:131",
+        0
+      ],
+      "on_false": [
+        "132:127",
+        0
+      ],
+      "on_true": [
+        "132:124",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Switch (Split Step)"
+    }
+  },
+  "132:122": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "CFG"
+    }
+  },
+  "F1": {
+    "inputs": {
+      "model_name": "hunyuanvideo_foley.pth",
+      "precision": "fp32",
+      "quantization": "none"
+    },
+    "class_type": "HunyuanModelLoader",
+    "_meta": {
+      "title": "HunyuanFoley Model"
+    }
+  },
+  "F2": {
+    "inputs": {
+      "vae_name": "vae_128d_48k.pth",
+      "synchformer_name": "synchformer_state_dict.pth"
+    },
+    "class_type": "HunyuanDependenciesLoader",
+    "_meta": {
+      "title": "HunyuanFoley Dependencies"
+    }
+  },
+  "F3": {
+    "inputs": {
+      "hunyuan_model": [
+        "F1",
+        0
+      ],
+      "hunyuan_deps": [
+        "F2",
+        0
+      ],
+      "image": [
+        "132:87",
+        0
+      ],
+      "fps": 16.0,
+      "duration": 5.1,
+      "prompt": "FOLEY_PROMPT",
+      "negative_prompt": "low quality, distorted, clipping, noise floor, hiss, hum, muffled, compressed artifacts, glitch, music, speech, voice, talking, singing, background music, silence, 8bit, lo-fi",
+      "cfg_scale": 5.0,
+      "steps": 60,
+      "sampler": "euler",
+      "batch_size": 1,
+      "seed": 0,
+      "force_offload": false
+    },
+    "class_type": "HunyuanFoleySampler",
+    "_meta": {
+      "title": "HunyuanFoley Sampler"
+    }
+  },
+  "F4": {
+    "inputs": {
+      "audio_batch": [
+        "F3",
+        0
+      ],
+      "index": 0
+    },
+    "class_type": "SelectAudioFromBatch",
+    "_meta": {
+      "title": "Select Audio"
+    }
+  },
+  "F5": {
+    "inputs": {
+      "audio": [
+        "F4",
+        0
+      ],
+      "filename_prefix": "audio/raw_foley",
+      "format": "flac"
+    },
+    "class_type": "SaveAudio",
+    "_meta": {
+      "title": "Save RAW Audio (FLAC)"
+    }
+  }
+}
