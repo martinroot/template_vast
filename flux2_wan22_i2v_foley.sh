@@ -145,24 +145,29 @@ download_if_missing \
 log_step "section_done" "[1/3] Wan 2.2 done"
 
 # ============================================================
-# [2/3] Flux 2 weights (~20 GB)
+# [2/3] Flux 2 weights (~70 GB) — via hf download (CDN fast, ~1GB/s)
+# Previously used wget which was 5x slower (~200 MB/s vs ~1000 MB/s)
 # ============================================================
-log_step "section_start" "[2/3] Flux 2 weights (~20GB)"
+log_step "section_start" "[2/3] Flux 2 weights (~70GB) via hf download"
 
-download_hf_wget \
-  "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/text_encoders/mistral_3_small_flux2_bf16.safetensors" \
+download_if_missing \
+  "Comfy-Org/flux2-dev" \
+  "split_files/text_encoders/mistral_3_small_flux2_bf16.safetensors" \
   "$MODELS_DIR/text_encoders/mistral_3_small_flux2_bf16.safetensors"
 
-download_hf_wget \
-  "https://huggingface.co/ByteZSzn/Flux.2-Turbo-ComfyUI/resolve/main/Flux_2-Turbo-LoRA_comfyui.safetensors" \
+download_if_missing \
+  "ByteZSzn/Flux.2-Turbo-ComfyUI" \
+  "Flux_2-Turbo-LoRA_comfyui.safetensors" \
   "$MODELS_DIR/loras/Flux_2-Turbo-LoRA_comfyui.safetensors"
 
-download_hf_wget \
-  "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/diffusion_models/flux2_dev_fp8mixed.safetensors" \
+download_if_missing \
+  "Comfy-Org/flux2-dev" \
+  "split_files/diffusion_models/flux2_dev_fp8mixed.safetensors" \
   "$MODELS_DIR/diffusion_models/flux2_dev_fp8mixed.safetensors"
 
-download_hf_wget \
-  "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors" \
+download_if_missing \
+  "Comfy-Org/flux2-dev" \
+  "split_files/vae/flux2-vae.safetensors" \
   "$MODELS_DIR/vae/flux2-vae.safetensors"
 
 log_step "section_done" "[2/3] Flux 2 done"
