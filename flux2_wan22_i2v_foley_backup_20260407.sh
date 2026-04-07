@@ -65,7 +65,7 @@ download_if_missing() {
   local tmpdir
   tmpdir=$(mktemp -d)
 
-  hf download "$repo" "$file" --local-dir "$tmpdir" --token "$HF_TOKEN"
+  hf download "$repo" "$file" --local-dir "$tmpdir"
   mv "$tmpdir/$file" "$out"
   rm -rf "$tmpdir"
 
@@ -77,7 +77,7 @@ download_if_missing() {
 # ────────────────────────────────────────────────────────────
 # Helper: download via wget with HF auth
 # ────────────────────────────────────────────────────────────
-export HF_TOKEN="${HF_TOKEN:-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}"
+HF_TOKEN="${HF_TOKEN:-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}"
 
 download_hf_wget() {
   local url="$1"
